@@ -4,6 +4,7 @@ import { Stock } from '../../stock/entities/stock.entity';
 import { RegistroProducto } from '../../registro-producto/entities/registro-producto.entity';
 import { Inventario } from '../../entities/inventario.entity';
 import { MovimientoInventario } from '../../entities/movimiento-inventario.entity';
+import { Ubicacion } from '../../entities/ubicacion.entity';
 
 @Entity('bodegas')
 export class Bodega {
@@ -38,6 +39,11 @@ export class Bodega {
   @ManyToOne(() => Persona, (persona) => persona.bodegasEncargadas)
   @JoinColumn({ name: 'encargado_id' })
   encargado: Persona;
+
+  // Relación con Ubicacion
+  @ManyToOne(() => Ubicacion, (ubicacion) => ubicacion.bodegas)
+  @JoinColumn({ name: 'ubicacion_id' })
+  ubicacion: Ubicacion;
 
   // Relación con Stock
   @OneToMany(() => Stock, (stock) => stock.bodega)
