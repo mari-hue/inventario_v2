@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,JoinColumn } from 'typeorm';
-import { Equipo } from '../equipos/entities/equipos.entity';
+import { Equipo } from '../equipo/entities/equipos.entity';
 import { Bodega } from '../bodega/entities/bodega.entity';
 import { Persona } from '../persona/entities/persona.entity';
 import { MovimientoTipo } from '../movimiento_tipo/entities/movimiento_tipo.entity';

@@ -41,5 +41,8 @@ export class Persona {
   @OneToMany(() => RegistroProducto, (registro) => registro.usuarioRegistra)
   registrosCreados: RegistroProducto[];
 
+    @Column({ nullable: true })
+    direccion: string;
+
 
 }

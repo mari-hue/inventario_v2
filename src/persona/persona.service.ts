@@ -1,35 +1,38 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { LdapService } from '../ldap/ldap.service';
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Persona } from './entities/persona.entity';
-import { CreatePersonaDto } from './dto/create-persona.dto';
-import { UpdatePersonaDto } from './dto/update-persona.dto';
 
 @Injectable()
 export class PersonaService {
   constructor(
+    private readonly ldap: LdapService,
     @InjectRepository(Persona)
-    private readonly personaRepository: Repository<Persona>,
+    private readonly repo: Repository<Persona>,
   ) {}
 
-  create(createPersonaDto: CreatePersonaDto) {
-    const persona = this.personaRepository.create(createPersonaDto);
-    return this.personaRepository.save(persona);
+  // 1) Traer datos desde AD
+  async importarDesdeAd(rut: string): Promise<Persona[]> {
+    // Ajusta el filtro según tu esquema, por ejemplo (sAMAccountName=rut)
+    const filter = `(sAMAccountName=${rut})`;
+    const attrs = ['cn', 'mail', 'telephoneNumber', 'streetAddress'];
+    const resultados = await this.ldap.search(filter, attrs);
+    // Mapear a tu entidad Persona
+    return resultados.map(obj => {
+      const p = new Persona();
+      p.nombre = obj.cn;
+      p.email = obj.mail;
+      p.telefono = obj.telephoneNumber;
+      p.direccion = obj.streetAddress;
+      return p;
+    });
   }
 
-  findAll() {
-    return this.personaRepository.find();
-  }
-
-  findOne(id: number) {
-    return this.personaRepository.findOneBy({ id });
-  }
-
-  update(id: number, updatePersonaDto: UpdatePersonaDto) {
-    return this.personaRepository.update(id, updatePersonaDto);
-  }
-
-  remove(id: number) {
-    return this.personaRepository.delete(id);
+  // 2) Guardar en tu BD
+  async crearDesdeAd(rut: string): Promise<Persona> {
+    const [personaAd] = await this.importarDesdeAd(rut);
+    // Opcional: controla duplicados antes de insertar
+    return this.repo.save(personaAd);
   }
 }
