@@ -2,6 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+// Importar módulos de la nueva estructura
+import { EquiposModule } from './modules/equipos/equipos.module';
+import { UsuariosModule } from './modules/usuarios/usuarios.module';
+import { AsignacionesModule } from './modules/asignaciones/asignaciones.module';
+import { CategoriasModule } from './modules/categorias/categorias.module';
+import { BodegasModule } from './modules/bodegas/bodegas.module';
+import { SharedModule } from './modules/shared/shared.module';
+
 // Importar todas las entidades del modelo de gestión de equipamiento
 import { Equipos } from './entities/equipos.entity';
 import { DocumentosEquipo } from './entities/documentos-equipo.entity';
@@ -64,6 +72,14 @@ import { MovimientosFisicos } from './entities/movimientos-fisicos.entity';
         ],
       }),
     }),
+
+    // Módulos de negocio organizados por dominio
+    EquiposModule,
+    UsuariosModule,
+    AsignacionesModule,
+    CategoriasModule,
+    BodegasModule,
+    SharedModule,
   ],
 })
 export class AppModule {}
