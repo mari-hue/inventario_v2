@@ -4,6 +4,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { EquipoModule } from './equipo/equipos.module';
 import { BodegaModule } from './bodega/bodega.module';
+import { UbicacionesModule } from './ubicaciones/ubicaciones.module';
+import { LotesModule } from './lotes/lotes.module';
+import { TransferenciasModule } from './transferencias/transferencias.module';
+import { ReportesModule } from './reportes/reportes.module';
 import { TipoProductoModule } from './tipo-producto/tipo-producto.module';
 import { PersonaModule } from './persona/persona.module';
 import { PerfilModule } from './perfil/perfil.module';
@@ -35,6 +39,10 @@ import { InventariosModule } from './inventarios/inventarios.module';
 
     EquipoModule,
     BodegaModule,
+    UbicacionesModule,
+    LotesModule,
+    TransferenciasModule,
+    ReportesModule,
     TipoProductoModule,
     PersonaModule,
     PerfilModule,     
