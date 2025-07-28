@@ -141,8 +141,8 @@ export class InventariosService {
         cantidadNueva,
         costoUnitario: movimientoDto.costoUnitario,
         costoTotal: movimientoDto.costoUnitario ? 
-          movimientoDto.costoUnitario * Math.abs(cantidadMovimiento) : null,
-        motivo: movimientoDto.motivo,
+          movimientoDto.costoUnitario * Math.abs(cantidadMovimiento) : 0,
+        motivo: movimientoDto.motivo || '',
         usuarioId: movimientoDto.usuarioId,
         ordenCompraId: movimientoDto.ordenCompraId,
         ordenVentaId: movimientoDto.ordenVentaId,
